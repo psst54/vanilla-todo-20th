@@ -55,5 +55,6 @@
 - [localStorage, sessionStorage](https://www.daleseo.com/js-web-storage/)
 - [git 사용법](https://wayhome25.github.io/git/2017/07/08/git-first-pull-request-story/)
 - [좋은 코드리뷰 방법](https://tech.kakao.com/2022/03/17/2022-newkrew-onboarding-codereview/)
-- [MDN 공식문서](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)(https://developer.mozilla.org/ko/docs/Web/API/Node/appendChild)
+- [MDN 공식문서-createElement()](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)
+- [MDN 공식문서-appendChild()](https://developer.mozilla.org/ko/docs/Web/API/Node/appendChild)
 - [DOM 개념,HTML 요소 조작](https://poiemaweb.com/js-dom#3-dom-query--traversing-%EC%9A%94%EC%86%8C%EC%97%90%EC%9D%98-%EC%A0%91%EA%B7%BC)
