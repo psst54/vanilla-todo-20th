@@ -47,6 +47,11 @@ header > h1 {
   border-color: var(--open-column-border);
 }
 
+#in-progress-column {
+  background-color: var(--in-progress-column-background);
+  border-color: var(--in-progress-column-border);
+}
+
 #done-column {
   background-color: var(--done-column-background);
   border-color: var(--done-column-border);
@@ -59,6 +64,10 @@ header > h1 {
 
 .open-hr {
   border: 1px solid var(--open-column-border);
+}
+
+.in-progress-hr {
+  border: 1px solid var(--in-progress-column-border);
 }
 
 .done-hr {
