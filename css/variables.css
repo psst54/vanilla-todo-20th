@@ -1,0 +1,13 @@
+:root {
+  --background: #121212;
+
+  --open-column-background: #31627e1a;
+  --done-column-background: #2a5f2d1a;
+  --open-column-border: #0d5580;
+  --done-column-border: #0b5c18;
+
+  --card-background: #121212ee;
+  --card-border: #505050;
+
+  --text-color: #ffffff;
+}

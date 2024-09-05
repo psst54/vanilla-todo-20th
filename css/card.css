@@ -1,0 +1,14 @@
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  padding: 1rem;
+
+  background: var(--card-background);
+
+  border: 2px solid var(--card-border);
+  border-radius: 1rem;
+}

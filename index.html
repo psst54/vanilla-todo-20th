@@ -1,14 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla Todo</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/card.css" />
+    <link rel="stylesheet" href="css/task.css" />
+    <link rel="stylesheet" href="css/variables.css" />
   </head>
 
   <body>
-    <div class="container"></div>
+    <div class="container">
+      <header class="header">
+        <h1 class="title">20XX. XX. XX.</h1>
+      </header>
+
+      <div class="kanban-board">
+        <section class="board-column" id="open-column">
+          <h2>Open</h2>
+
+          <hr class="open-hr" />
+
+          <ul class="card-list">
+            <li class="card">
+              <header><h3>Card Title 1</h3></header>
+              <main>
+                <ol>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 1</p>
+                  </li>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 2</p>
+                  </li>
+                </ol>
+              </main>
+            </li>
+            <li class="card">
+              <header><h3>Card Title 2</h3></header>
+              <main>
+                <ol>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 1</p>
+                  </li>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 2</p>
+                  </li>
+                </ol>
+              </main>
+            </li>
+          </ul>
+        </section>
+
+        <section class="board-column" id="done-column">
+          <h2>Done</h2>
+
+          <hr class="done-hr" />
+
+          <ul class="card-list">
+            <li class="card">
+              <header><h3>Card Title 1</h3></header>
+              <main>
+                <ol>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 1</p>
+                  </li>
+                  <li class="task">
+                    <input type="checkbox" />
+                    <p>task 2</p>
+                  </li>
+                </ol>
+              </main>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
   </body>
-  <script src="script.js"></script>
+  <script src="js/index.js"></script>
 </html>
