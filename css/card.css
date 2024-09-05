@@ -12,3 +12,17 @@
   border: 2px solid var(--card-border);
   border-radius: 1rem;
 }
+
+.add-subject-button {
+  background: transparent;
+
+  border: none;
+  border-radius: 100%;
+  outline: none;
+
+  cursor: pointer;
+}
+.add-subject-button > img {
+  width: 2rem;
+  height: 2rem;
+}
