@@ -4,15 +4,16 @@ class SubjectViewModel {
     this.taskViewModel = taskViewModel;
   }
 
-  addSubject(subject) {
+  addSubject(title, state = OPEN) {
+    const subject = new Subject(title, state);
     this.subjectList.push(subject);
+
     this.render();
+    return subject;
   }
 
   render() {
-    const columnList = [OPEN, DONE];
-
-    columnList.forEach((column) => {
+    COLUMN_LIST.forEach((column) => {
       const subjectListElement = document.getElementById(
         `${column}-subject-list`
       );
@@ -26,9 +27,7 @@ class SubjectViewModel {
         const subjectElement = document.createElement('li');
         subjectElement.classList.add('subject');
         subjectElement.innerHTML = `
-            <header>
-              <h3>${subject.getTitle()}</h3>
-            <header>
+            <h3>${subject.getTitle()}</h3>
             <main>
               <ol id=${taskListElementId}>
               </ol>
@@ -36,24 +35,8 @@ class SubjectViewModel {
             `;
         subjectListElement.appendChild(subjectElement);
 
-        const taskListElement = document.getElementById(taskListElementId);
-        this.renderTasks(subjectId, taskListElement);
+        this.taskViewModel.render(subjectId);
       });
-    });
-  }
-
-  renderTasks(subjectId, taskListElement) {
-    this.taskViewModel.getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = document.createElement('li');
-      taskElement.className = 'task';
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      const titleElement = document.createElement('p');
-      titleElement.innerText = task.getTitle();
-
-      taskElement.appendChild(checkboxElement);
-      taskElement.appendChild(titleElement);
-      taskListElement.appendChild(taskElement);
     });
   }
 }
