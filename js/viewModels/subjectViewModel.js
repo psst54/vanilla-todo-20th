@@ -1,59 +1,49 @@
 class SubjectViewModel {
   constructor(taskViewModel) {
-    this.subjectList = [];
+    this.subjectList = new Map();
     this.taskViewModel = taskViewModel;
   }
 
-  addSubject(subject) {
-    this.subjectList.push(subject);
+  addSubject(title, state = OPEN) {
+    const subject = new Subject(title, state);
+    if (!this.subjectList.has(state)) {
+      this.subjectList.set(state, []);
+    }
+    this.subjectList.get(state).push(subject);
+
     this.render();
+    return subject;
+  }
+
+  getSubjectsByColumn(columnId) {
+    return this.subjectList.get(columnId) || [];
   }
 
   render() {
-    const columnList = [OPEN, DONE];
-
-    columnList.forEach((column) => {
+    COLUMN_LIST.forEach((column) => {
       const subjectListElement = document.getElementById(
         `${column}-subject-list`
       );
       subjectListElement.innerHTML = '';
 
-      this.subjectList.forEach((subject) => {
+      this.getSubjectsByColumn(column).forEach((subject) => {
         const subjectId = subject.getId();
-        const taskListElementId = `${subjectId}-task-list`;
-        if (subject.getState() !== column) return;
+        if (subject.getState() !== column) {
+          return;
+        }
 
         const subjectElement = document.createElement('li');
-        subjectElement.classList.add('card');
+        subjectElement.classList.add('subject');
         subjectElement.innerHTML = `
-            <header>
-              <h3>${subject.getTitle()}</h3>
-            <header>
+            <h3>${subject.getTitle()}</h3>
             <main>
-              <ol id=${taskListElementId}>
-              </ol>
+              <ol id=${`${subjectId}-task-list`} />
             </main>
             `;
         subjectListElement.appendChild(subjectElement);
 
-        const taskListElement = document.getElementById(taskListElementId);
-        this.renderTasks(subjectId, taskListElement);
+        this.taskViewModel.render(subjectId);
       });
-    });
-  }
-
-  renderTasks(subjectId, taskListElement) {
-    this.taskViewModel.getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = document.createElement('li');
-      taskElement.className = 'task';
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      const titleElement = document.createElement('p');
-      titleElement.innerText = task.getTitle();
-
-      taskElement.appendChild(checkboxElement);
-      taskElement.appendChild(titleElement);
-      taskListElement.appendChild(taskElement);
     });
   }
 }

@@ -6,7 +6,7 @@
     <title>Vanilla Todo</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/card.css" />
+    <link rel="stylesheet" href="css/subject.css" />
     <link rel="stylesheet" href="css/task.css" />
     <link rel="stylesheet" href="css/variables.css" />
   </head>
@@ -19,19 +19,45 @@
 
       <div class="kanban-board">
         <section class="board-column" id="open-column">
-          <h2>Open</h2>
+          <header class="board-column-header">
+            <h2>Open</h2>
+            <button class="add-subject-button" id="add-subject-button-open">
+              <img src="assets/addIcon.svg" />
+            </button>
+          </header>
 
           <hr class="open-hr" />
 
-          <ul class="card-list" id="open-subject-list"></ul>
+          <ul class="subject-list" id="open-subject-list"></ul>
+        </section>
+
+        <section class="board-column" id="in-progress-column">
+          <header class="board-column-header">
+            <h2>In Progress</h2>
+            <button
+              class="add-subject-button"
+              id="add-subject-button-in-progress"
+            >
+              <img src="assets/addIcon.svg" />
+            </button>
+          </header>
+
+          <hr class="in-progress-hr" />
+
+          <ul class="subject-list" id="in-progress-subject-list"></ul>
         </section>
 
         <section class="board-column" id="done-column">
-          <h2>Done</h2>
+          <header class="board-column-header">
+            <h2>Done</h2>
+            <button class="add-subject-button" id="add-subject-button-done">
+              <img src="assets/addIcon.svg" />
+            </button>
+          </header>
 
           <hr class="done-hr" />
 
-          <ul class="card-list" id="done-subject-list"></ul>
+          <ul class="subject-list" id="done-subject-list"></ul>
         </section>
       </div>
     </div>
