@@ -24,7 +24,7 @@ class SubjectViewModel {
         if (subject.getState() !== column) return;
 
         const subjectElement = document.createElement('li');
-        subjectElement.classList.add('card');
+        subjectElement.classList.add('subject');
         subjectElement.innerHTML = `
             <header>
               <h3>${subject.getTitle()}</h3>
