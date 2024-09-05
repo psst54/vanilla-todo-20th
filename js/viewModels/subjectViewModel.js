@@ -35,7 +35,12 @@ class SubjectViewModel {
         const subjectElement = document.createElement('li');
         subjectElement.classList.add('subject');
         subjectElement.innerHTML = `
-            <h3>${subject.getTitle()}</h3>
+            <header class="subject-header">
+              <h3>${subject.getTitle()}</h3>
+              <button class="delete-subject-button">
+                <img src="assets/deleteIcon.svg" class="delete-subject-icon" />
+              </button>
+            </header>
             <main>
               <ol id=${`${subjectId}-task-list`} />
             </main>
