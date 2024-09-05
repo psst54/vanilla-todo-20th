@@ -23,38 +23,7 @@
 
           <hr class="open-hr" />
 
-          <ul class="card-list">
-            <li class="card">
-              <header><h3>Card Title 1</h3></header>
-              <main>
-                <ol>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 1</p>
-                  </li>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 2</p>
-                  </li>
-                </ol>
-              </main>
-            </li>
-            <li class="card">
-              <header><h3>Card Title 2</h3></header>
-              <main>
-                <ol>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 1</p>
-                  </li>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 2</p>
-                  </li>
-                </ol>
-              </main>
-            </li>
-          </ul>
+          <ul class="card-list" id="open-subject-list"></ul>
         </section>
 
         <section class="board-column" id="done-column">
@@ -62,26 +31,14 @@
 
           <hr class="done-hr" />
 
-          <ul class="card-list">
-            <li class="card">
-              <header><h3>Card Title 1</h3></header>
-              <main>
-                <ol>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 1</p>
-                  </li>
-                  <li class="task">
-                    <input type="checkbox" />
-                    <p>task 2</p>
-                  </li>
-                </ol>
-              </main>
-            </li>
-          </ul>
+          <ul class="card-list" id="done-subject-list"></ul>
         </section>
       </div>
     </div>
   </body>
   <script src="js/index.js"></script>
+  <script src="js/models/subject.js"></script>
+  <script src="js/models/task.js"></script>
+  <script src="js/viewModels/subjectViewModel.js"></script>
+  <script src="js/constant.js"></script>
 </html>
