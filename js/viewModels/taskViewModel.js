@@ -19,6 +19,16 @@ class TaskViewModel {
     return this.#taskList.get(subjectId) || [];
   }
 
+  deleteTask(targetId, subjectId) {
+    const taskList = this.#taskList.get(subjectId);
+    const targetIndex = taskList.findIndex(
+      (subject) => subject.getId() === targetId
+    );
+    taskList.splice(targetIndex, 1);
+
+    this.render(subjectId);
+  }
+
   #createTaskInputElement(subjectId) {
     const formElement = createElement('form', {
       id: `${subjectId}-add-task-form`,
@@ -52,12 +62,25 @@ class TaskViewModel {
     taskListElement.appendChild(this.#createTaskInputElement(subjectId));
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = createElement('li', { class: 'task' });
-      const checkboxElement = createElement('input', { type: 'checkbox' });
-      const titleElement = createElement('p', { innerText: task.getTitle() });
+      const taskElement = createElement('li', {
+        class: 'task',
+      });
+      const checkboxElement = createElement('input', {
+        type: 'checkbox',
+      });
+      const titleElement = createElement('p', {
+        innerText: task.getTitle(),
+      });
+      const deleteButtonElement = createElement('button', {
+        innerText: '삭제',
+      });
 
-      taskElement.append(checkboxElement, titleElement);
+      taskElement.append(checkboxElement, titleElement, deleteButtonElement);
       taskListElement.appendChild(taskElement);
+
+      deleteButtonElement.addEventListener('click', () => {
+        this.deleteTask(task.getId(), subjectId);
+      });
     });
   }
 }

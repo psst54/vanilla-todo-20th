@@ -4,13 +4,7 @@
   gap: 0.5rem;
 }
 
-.task {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.add-task-button {
+.task-list button {
   padding: 0.25rem 0.5rem;
   background: transparent;
 
@@ -18,7 +12,18 @@
   border-radius: 1rem;
   outline: none;
 
+  color: var(--text-color);
   white-space: nowrap;
 
   cursor: pointer;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task p {
+  flex: 1;
 }
