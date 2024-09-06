@@ -20,20 +20,19 @@ class TaskViewModel {
   }
 
   #createTaskInputElement(subjectId) {
-    const formId = `${subjectId}-add-task-form`;
-    const formElement = document.createElement('form');
-    formElement.id = formId;
-    formElement.classList.add('add-task-form');
+    const formElement = createElement('form', {
+      id: `${subjectId}-add-task-form`,
+      class: 'add-task-form',
+    });
+    const inputElement = createElement('input', {
+      type: 'text',
+      placeholder: '할 일을 입력해주세요',
+    });
+    const buttonElement = createElement('button', {
+      innerText: '추가',
+    });
 
-    const inputElement = document.createElement('input');
-    inputElement.type = 'text';
-    inputElement.placeholder = '할 일을 입력해주세요';
-
-    const submitButtonElement = document.createElement('button');
-    submitButtonElement.innerText = '추가';
-
-    formElement.appendChild(inputElement);
-    formElement.appendChild(submitButtonElement);
+    formElement.append(inputElement, buttonElement);
 
     formElement.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -47,22 +46,17 @@ class TaskViewModel {
   }
 
   render(subjectId) {
-    const taskListElementId = `${subjectId}-task-list`;
-    const taskListElement = document.getElementById(taskListElementId);
+    const taskListElement = document.getElementById(`${subjectId}-task-list`);
     taskListElement.innerHTML = '';
 
     taskListElement.appendChild(this.#createTaskInputElement(subjectId));
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = document.createElement('li');
-      taskElement.classList.add('task');
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      const titleElement = document.createElement('p');
-      titleElement.innerText = task.getTitle();
+      const taskElement = createElement('li', { class: 'task' });
+      const checkboxElement = createElement('input', { type: 'checkbox' });
+      const titleElement = createElement('p', { innerText: task.getTitle() });
 
-      taskElement.appendChild(checkboxElement);
-      taskElement.appendChild(titleElement);
+      taskElement.append(checkboxElement, titleElement);
       taskListElement.appendChild(taskElement);
     });
   }

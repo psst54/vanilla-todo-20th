@@ -45,9 +45,9 @@ class SubjectViewModel {
           return;
         }
 
-        const subjectElement = document.createElement('li');
-        subjectElement.classList.add('subject');
-        subjectElement.innerHTML = `
+        const subjectElement = createElement('li', {
+          class: 'subject',
+          innerHTML: `
             <header class="subject-header">
               <h3>${subject.getTitle()}</h3>
               <button class="delete-subject-button" id="${subjectId}-delete-button">
@@ -57,7 +57,8 @@ class SubjectViewModel {
             <main>
               <ol id=${`${subjectId}-task-list`} class="task-list" />
             </main>
-            `;
+            `,
+        });
         subjectListElement.appendChild(subjectElement);
 
         const deleteButtonElement = document.getElementById(
