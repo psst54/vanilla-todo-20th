@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla Todo</title>
     <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/subject.css" />
     <link rel="stylesheet" href="css/task.css" />
@@ -19,44 +20,20 @@
 
       <div class="kanban-board">
         <section class="board-column" id="open-column">
-          <header class="board-column-header">
-            <h2>Open</h2>
-            <button class="add-subject-button" id="add-subject-button-open">
-              <img src="assets/addIcon.svg" />
-            </button>
-          </header>
-
+          <h2>Open</h2>
           <hr class="open-hr" />
-
           <ul class="subject-list" id="open-subject-list"></ul>
         </section>
 
         <section class="board-column" id="in-progress-column">
-          <header class="board-column-header">
-            <h2>In Progress</h2>
-            <button
-              class="add-subject-button"
-              id="add-subject-button-in-progress"
-            >
-              <img src="assets/addIcon.svg" />
-            </button>
-          </header>
-
+          <h2>In Progress</h2>
           <hr class="in-progress-hr" />
-
           <ul class="subject-list" id="in-progress-subject-list"></ul>
         </section>
 
         <section class="board-column" id="done-column">
-          <header class="board-column-header">
-            <h2>Done</h2>
-            <button class="add-subject-button" id="add-subject-button-done">
-              <img src="assets/addIcon.svg" />
-            </button>
-          </header>
-
+          <h2>Done</h2>
           <hr class="done-hr" />
-
           <ul class="subject-list" id="done-subject-list"></ul>
         </section>
       </div>
