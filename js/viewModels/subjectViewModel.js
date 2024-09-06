@@ -18,12 +18,12 @@ class SubjectViewModel {
     return subject;
   }
 
-  deleteSubject(subjectId, state) {
-    const subjects = this.#subjectList.get(state);
-    const subjectIndex = subjects.findIndex(
-      (subject) => subject.getId() === subjectId
+  deleteSubject(targetId, state) {
+    const subjectList = this.#subjectList.get(state);
+    const targetIndex = subjectList.findIndex(
+      (subject) => subject.getId() === targetId
     );
-    subjects.splice(subjectIndex, 1);
+    subjectList.splice(targetIndex, 1);
 
     this.render();
   }
