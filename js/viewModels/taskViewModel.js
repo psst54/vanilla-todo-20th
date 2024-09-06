@@ -5,8 +5,8 @@ class TaskViewModel {
     this.#taskList = new Map();
   }
 
-  addTask(title, subjectId, isCompleted = false) {
-    const task = new Task(title, subjectId, isCompleted);
+  addTask({ title, subjectId, isCompleted = false }) {
+    const task = new Task({ title, subjectId, isCompleted });
     if (!this.#taskList.has(subjectId)) {
       this.#taskList.set(subjectId, []);
     }
@@ -47,7 +47,7 @@ class TaskViewModel {
         return;
       }
 
-      this.addTask(inputElement.value, subjectId);
+      this.addTask({ title: inputElement.value, subjectId });
 
       const taskChangeEvent = new CustomEvent('taskChange', {
         bubbles: true,
@@ -69,11 +69,11 @@ class TaskViewModel {
       task.getIsCompleted()
     ).length;
 
-    if (taskCount === doneTaskCount) {
-      return DONE;
-    }
     if (doneTaskCount === 0) {
       return OPEN;
+    }
+    if (taskCount === doneTaskCount) {
+      return DONE;
     }
     return IN_PROGRESS;
   }

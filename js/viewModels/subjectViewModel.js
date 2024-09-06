@@ -8,8 +8,8 @@ class SubjectViewModel {
     this.#taskViewModel = taskViewModel;
   }
 
-  addSubject(title, state = OPEN) {
-    const subject = new Subject(title, state);
+  addSubject({ title, state = OPEN }) {
+    const subject = new Subject({ title, state });
     this.#subjectList.get(state).push(subject);
     this.render();
     return subject;
