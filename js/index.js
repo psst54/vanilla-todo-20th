@@ -13,14 +13,14 @@ document.addEventListener('DOMContentLoaded', () => {
   taskViewModel.addTask('task 1', doneSubject1.getId());
   taskViewModel.addTask('task 2', doneSubject1.getId());
 
-  COLUMN_LIST.forEach((column) => {
+  STATE_LIST.forEach((state) => {
     const addSubjectButtonElement = document.getElementById(
-      `add-subject-button-${column.toLowerCase()}`
+      `add-subject-button-${state.toLowerCase()}`
     );
 
     addSubjectButtonElement.addEventListener('click', () => {
       const subjectName = 'New Subject';
-      subjectViewModel.addSubject(subjectName, column);
+      subjectViewModel.addSubject(subjectName, state);
     });
   });
 });
