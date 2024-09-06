@@ -52,11 +52,20 @@ class TaskViewModel {
     taskListElement.appendChild(this.#createTaskInputElement(subjectId));
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = createElement('li', { class: 'task' });
-      const checkboxElement = createElement('input', { type: 'checkbox' });
-      const titleElement = createElement('p', { innerText: task.getTitle() });
+      const taskElement = createElement('li', {
+        class: 'task',
+      });
+      const checkboxElement = createElement('input', {
+        type: 'checkbox',
+      });
+      const titleElement = createElement('p', {
+        innerText: task.getTitle(),
+      });
+      const deleteButtonElement = createElement('button', {
+        innerText: '삭제',
+      });
 
-      taskElement.append(checkboxElement, titleElement);
+      taskElement.append(checkboxElement, titleElement, deleteButtonElement);
       taskListElement.appendChild(taskElement);
     });
   }
