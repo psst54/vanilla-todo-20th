@@ -1,20 +1,22 @@
 class TaskViewModel {
+  #taskList;
+
   constructor() {
-    this.taskList = new Map();
+    this.#taskList = new Map();
   }
 
   addTask(title, subjectId) {
     const task = new Task(title, subjectId);
-    if (!this.taskList.has(subjectId)) {
-      this.taskList.set(subjectId, []);
+    if (!this.#taskList.has(subjectId)) {
+      this.#taskList.set(subjectId, []);
     }
-    this.taskList.get(subjectId).push(task);
+    this.#taskList.get(subjectId).push(task);
 
     this.render(subjectId);
   }
 
   getTasksBySubject(subjectId) {
-    return this.taskList.get(subjectId) || [];
+    return this.#taskList.get(subjectId) || [];
   }
 
   render(subjectId) {

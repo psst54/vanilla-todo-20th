@@ -1,22 +1,25 @@
 class SubjectViewModel {
+  #subjectList;
+  #taskViewModel;
+
   constructor(taskViewModel) {
-    this.subjectList = new Map();
-    this.taskViewModel = taskViewModel;
+    this.#subjectList = new Map();
+    this.#taskViewModel = taskViewModel;
   }
 
   addSubject(title, state = OPEN) {
     const subject = new Subject(title, state);
-    if (!this.subjectList.has(state)) {
-      this.subjectList.set(state, []);
+    if (!this.#subjectList.has(state)) {
+      this.#subjectList.set(state, []);
     }
-    this.subjectList.get(state).push(subject);
+    this.#subjectList.get(state).push(subject);
 
     this.render();
     return subject;
   }
 
   deleteSubject(subjectId, state) {
-    const subjects = this.subjectList.get(state);
+    const subjects = this.#subjectList.get(state);
     const subjectIndex = subjects.findIndex(
       (subject) => subject.getId() === subjectId
     );
@@ -26,7 +29,7 @@ class SubjectViewModel {
   }
 
   getSubjectsByState(state) {
-    return this.subjectList.get(state) || [];
+    return this.#subjectList.get(state) || [];
   }
 
   render() {
@@ -64,7 +67,7 @@ class SubjectViewModel {
           this.deleteSubject(subjectId, state)
         );
 
-        this.taskViewModel.render(subjectId);
+        this.#taskViewModel.render(subjectId);
       });
     });
   }
