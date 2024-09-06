@@ -55,7 +55,7 @@ class SubjectViewModel {
               </button>
             </header>
             <main>
-              <ol id=${`${subjectId}-task-list`} />
+              <ol id=${`${subjectId}-task-list`} class="task-list" />
             </main>
             `;
         subjectListElement.appendChild(subjectElement);
