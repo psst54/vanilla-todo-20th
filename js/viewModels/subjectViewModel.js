@@ -63,8 +63,8 @@ class SubjectViewModel {
    * @param {string} state - The state in which the new subject will be added.
    * @returns {HTMLElement} - The created form element.
    */
-  #createAddSubjectForm(state) {
-    const addSubjectCardElement = createElement('li', {
+  #createFormElement(state) {
+    const containerElement = createElement('li', {
       class: 'subject add-subject-card',
     });
     const formElement = createElement('form');
@@ -73,24 +73,30 @@ class SubjectViewModel {
       placeholder: NEW_SUBJECT_PLACEHOLDER,
       name: 'subject-title',
     });
-    const addSubjectButtonElement = createElement('button', {
+    const buttonElement = createElement('button', {
       id: `add-subject-button-${state}`,
     });
     const iconElement = createElement('img', {
       src: 'assets/addIcon.svg',
     });
-    addSubjectButtonElement.appendChild(iconElement);
-    formElement.append(inputElement, addSubjectButtonElement);
+
+    containerElement.appendChild(formElement);
+    buttonElement.appendChild(iconElement);
+    formElement.append(inputElement, buttonElement);
 
     formElement.addEventListener('submit', (event) =>
-      this.#handleAddSubjectSubmit(event, inputElement, state, formElement)
+      this.#onSubmitAddSubject({
+        event,
+        state,
+        formElement,
+        inputElement,
+      })
     );
 
-    addSubjectCardElement.appendChild(formElement);
-    return addSubjectCardElement;
+    return containerElement;
   }
 
-  #handleAddSubjectSubmit(event, inputElement, state, formElement) {
+  #onSubmitAddSubject({ event, state, formElement, inputElement }) {
     event.preventDefault();
     this.addSubject({ title: inputElement.value, state });
     dispatchTaskChangeEvent(formElement);
@@ -122,28 +128,33 @@ class SubjectViewModel {
     return subjectElement;
   }
 
-  #attachEventHandlerToSubject(subjectElement, subjectId, state) {
+  #addSubjectEventHandler(subjectElement, subjectId, state) {
+    // When a taskChange event occurs, update the subject's task list.
     subjectElement.addEventListener('taskChange', () =>
-      this.#handleTaskChange(subjectId, state)
+      this.#onChangeTask(subjectId, state)
     );
 
-    const deleteButtonElement = document.getElementById(
-      `${subjectId}-delete-button`
-    );
-    deleteButtonElement.addEventListener('click', () =>
-      this.deleteSubject({ targetId: subjectId, state })
-    );
+    // When the delete button is clicked, remove the subject from the list.
+    document
+      .getElementById(`${subjectId}-delete-button`)
+      .addEventListener('click', () =>
+        this.deleteSubject({ targetId: subjectId, state })
+      );
   }
 
-  #handleTaskChange(subjectId, state) {
-    const newState = this.#taskViewModel.getSubjectState(subjectId);
+  #onChangeTask(subjectId, state) {
+    /// Get the next state of the subject.
+    const nextState = this.#taskViewModel.getSubjectState(subjectId);
+    // Get the subject list in the current column.
     const currentColumnSubjectList = this.#subjectList.get(state);
+    // Find the subject to update based on its ID
     const subjectToUpdate = currentColumnSubjectList.find(
       (currentSubject) => currentSubject.getId() === subjectId
     );
-    subjectToUpdate.setState(newState);
+    // Update the subject's state
+    subjectToUpdate.setState(nextState);
 
-    if (state === newState) {
+    if (state === nextState) {
       // Case #1
       // If the state is not changed, only update the task list for the subject
       this.#taskViewModel.render(subjectId);
@@ -154,7 +165,7 @@ class SubjectViewModel {
       currentColumnSubjectList.indexOf(subjectToUpdate),
       1
     );
-    this.#subjectList.get(newState).push(subjectToUpdate);
+    this.#subjectList.get(nextState).push(subjectToUpdate);
 
     // Case #2
     // Re-render the entire column
@@ -171,17 +182,13 @@ class SubjectViewModel {
       subjectListElement.innerHTML = '';
 
       // Render form to add subject
-      subjectListElement.appendChild(this.#createAddSubjectForm(state));
+      subjectListElement.appendChild(this.#createFormElement(state));
 
       // Render subject
       this.#getSubjectsByState(state).forEach((subject) => {
         const subjectElement = this.#createSubjectElement(subject);
         subjectListElement.appendChild(subjectElement);
-        this.#attachEventHandlerToSubject(
-          subjectElement,
-          subject.getId(),
-          state
-        );
+        this.#addSubjectEventHandler(subjectElement, subject.getId(), state);
         dispatchTaskChangeEvent(subjectElement);
       });
     });
