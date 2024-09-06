@@ -117,7 +117,7 @@ class TaskViewModel {
 
       checkboxElement.addEventListener('change', (event) => {
         const isChecked = event.target.checked;
-        task.setCompleted(isChecked);
+        task.setIsCompleted(isChecked);
         taskElement.classList.toggle('isCompleted');
 
         const taskChangeEvent = new CustomEvent('taskChange', {

@@ -9,7 +9,7 @@ class Task {
     this.#isCompleted = isCompleted;
   }
 
-  setCompleted(isCompleted) {
+  setIsCompleted(isCompleted) {
     this.#isCompleted = isCompleted;
   }
 
