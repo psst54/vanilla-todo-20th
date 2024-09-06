@@ -81,6 +81,11 @@ class TaskViewModel {
       deleteButtonElement.addEventListener('click', () => {
         this.deleteTask(task.getId(), subjectId);
       });
+
+      checkboxElement.addEventListener('change', (event) => {
+        const isChecked = event.target.checked;
+        task.setCompleted(isChecked);
+      });
     });
   }
 }
