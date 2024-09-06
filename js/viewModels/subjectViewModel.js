@@ -25,20 +25,20 @@ class SubjectViewModel {
     this.render();
   }
 
-  getSubjectsByColumn(columnId) {
-    return this.subjectList.get(columnId) || [];
+  getSubjectsByState(state) {
+    return this.subjectList.get(state) || [];
   }
 
   render() {
-    COLUMN_LIST.forEach((column) => {
+    STATE_LIST.forEach((state) => {
       const subjectListElement = document.getElementById(
-        `${column}-subject-list`
+        `${state}-subject-list`
       );
       subjectListElement.innerHTML = '';
 
-      this.getSubjectsByColumn(column).forEach((subject) => {
+      this.getSubjectsByState(state).forEach((subject) => {
         const subjectId = subject.getId();
-        if (subject.getState() !== column) {
+        if (subject.getState() !== state) {
           return;
         }
 
@@ -61,7 +61,7 @@ class SubjectViewModel {
           `${subjectId}-delete-button`
         );
         deleteButtonElement.addEventListener('click', () =>
-          this.deleteSubject(subjectId, column)
+          this.deleteSubject(subjectId, state)
         );
 
         this.taskViewModel.render(subjectId);
