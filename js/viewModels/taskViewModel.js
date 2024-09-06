@@ -32,7 +32,7 @@ class TaskViewModel {
       innerText: '추가',
     });
 
-    formElement.appendChild(inputElement, buttonElement);
+    formElement.append(inputElement, buttonElement);
 
     formElement.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -46,22 +46,17 @@ class TaskViewModel {
   }
 
   render(subjectId) {
-    const taskListElementId = `${subjectId}-task-list`;
-    const taskListElement = document.getElementById(taskListElementId);
+    const taskListElement = document.getElementById(`${subjectId}-task-list`);
     taskListElement.innerHTML = '';
 
     taskListElement.appendChild(this.#createTaskInputElement(subjectId));
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = document.createElement('li');
-      taskElement.classList.add('task');
-      const checkboxElement = document.createElement('input');
-      checkboxElement.type = 'checkbox';
-      const titleElement = document.createElement('p');
-      titleElement.innerText = task.getTitle();
+      const taskElement = createElement('li', { class: 'task' });
+      const checkboxElement = createElement('input', { type: 'checkbox' });
+      const titleElement = createElement('p', { innerText: task.getTitle() });
 
-      taskElement.appendChild(checkboxElement);
-      taskElement.appendChild(titleElement);
+      taskElement.append(checkboxElement, titleElement);
       taskListElement.appendChild(taskElement);
     });
   }
