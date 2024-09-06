@@ -55,7 +55,7 @@ class TaskViewModel {
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
       const taskElement = document.createElement('li');
-      taskElement.className = 'task';
+      taskElement.classList.add('task');
       const checkboxElement = document.createElement('input');
       checkboxElement.type = 'checkbox';
       const titleElement = document.createElement('p');
