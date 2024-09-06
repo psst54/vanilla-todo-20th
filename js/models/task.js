@@ -1,12 +1,10 @@
 class Task {
   #title;
-  #subjectId;
   #id;
   #isCompleted;
 
-  constructor({ title = 'New Task', subjectId, isCompleted = false }) {
+  constructor({ title = 'New Task', isCompleted = false }) {
     this.#title = title;
-    this.#subjectId = subjectId;
     this.#id = Math.random().toString(36).substring(2);
     this.#isCompleted = isCompleted;
   }

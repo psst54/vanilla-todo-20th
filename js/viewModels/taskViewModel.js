@@ -6,7 +6,7 @@ class TaskViewModel {
   }
 
   addTask({ title, subjectId, isCompleted = false }) {
-    const task = new Task({ title, subjectId, isCompleted });
+    const task = new Task({ title, isCompleted });
     if (!this.#taskList.has(subjectId)) {
       this.#taskList.set(subjectId, []);
     }
