@@ -17,15 +17,4 @@ document.addEventListener('DOMContentLoaded', () => {
   taskViewModel.addTask('task 2', doneSubject1.getId());
 
   // --------------------------------------------------
-
-  STATE_LIST.forEach((state) => {
-    const addSubjectButtonElement = document.getElementById(
-      `add-subject-button-${state.toLowerCase()}`
-    );
-
-    addSubjectButtonElement.addEventListener('click', () => {
-      const subjectName = NEW_SUBJECT_NAME; // [todo] remove this line
-      subjectViewModel.addSubject(subjectName, state);
-    });
-  });
 });

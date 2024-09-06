@@ -22,7 +22,6 @@ class TaskViewModel {
   #createTaskInputElement(subjectId) {
     const formElement = createElement('form', {
       id: `${subjectId}-add-task-form`,
-      class: 'add-task-form',
     });
     const inputElement = createElement('input', {
       type: 'text',
@@ -30,6 +29,7 @@ class TaskViewModel {
     });
     const buttonElement = createElement('button', {
       innerText: '추가',
+      class: 'add-task-button',
     });
 
     formElement.append(inputElement, buttonElement);
