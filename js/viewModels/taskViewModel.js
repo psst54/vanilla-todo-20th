@@ -19,6 +19,16 @@ class TaskViewModel {
     return this.#taskList.get(subjectId) || [];
   }
 
+  deleteTask(targetId, subjectId) {
+    const taskList = this.#taskList.get(subjectId);
+    const targetIndex = taskList.findIndex(
+      (subject) => subject.getId() === targetId
+    );
+    taskList.splice(targetIndex, 1);
+
+    this.render(subjectId);
+  }
+
   #createTaskInputElement(subjectId) {
     const formElement = createElement('form', {
       id: `${subjectId}-add-task-form`,
@@ -67,6 +77,10 @@ class TaskViewModel {
 
       taskElement.append(checkboxElement, titleElement, deleteButtonElement);
       taskListElement.appendChild(taskElement);
+
+      deleteButtonElement.addEventListener('click', () => {
+        this.deleteTask(task.getId(), subjectId);
+      });
     });
   }
 }
