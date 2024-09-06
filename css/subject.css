@@ -13,6 +13,11 @@
   border-radius: 1rem;
 }
 
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .add-subject-button {
   background: transparent;
 
@@ -25,4 +30,17 @@
 .add-subject-button > img {
   width: 2rem;
   height: 2rem;
+}
+
+.delete-subject-button {
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+}
+.delete-subject-icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }

@@ -15,32 +15,54 @@ class SubjectViewModel {
     return subject;
   }
 
-  getSubjectsByColumn(columnId) {
-    return this.subjectList.get(columnId) || [];
+  deleteSubject(subjectId, state) {
+    const subjects = this.subjectList.get(state);
+    const subjectIndex = subjects.findIndex(
+      (subject) => subject.getId() === subjectId
+    );
+    subjects.splice(subjectIndex, 1);
+
+    this.render();
+  }
+
+  getSubjectsByState(state) {
+    return this.subjectList.get(state) || [];
   }
 
   render() {
-    COLUMN_LIST.forEach((column) => {
+    STATE_LIST.forEach((state) => {
       const subjectListElement = document.getElementById(
-        `${column}-subject-list`
+        `${state}-subject-list`
       );
       subjectListElement.innerHTML = '';
 
-      this.getSubjectsByColumn(column).forEach((subject) => {
+      this.getSubjectsByState(state).forEach((subject) => {
         const subjectId = subject.getId();
-        if (subject.getState() !== column) {
+        if (subject.getState() !== state) {
           return;
         }
 
         const subjectElement = document.createElement('li');
         subjectElement.classList.add('subject');
         subjectElement.innerHTML = `
-            <h3>${subject.getTitle()}</h3>
+            <header class="subject-header">
+              <h3>${subject.getTitle()}</h3>
+              <button class="delete-subject-button" id="${subjectId}-delete-button">
+                <img src="assets/deleteIcon.svg" class="delete-subject-icon" />
+              </button>
+            </header>
             <main>
               <ol id=${`${subjectId}-task-list`} />
             </main>
             `;
         subjectListElement.appendChild(subjectElement);
+
+        const deleteButtonElement = document.getElementById(
+          `${subjectId}-delete-button`
+        );
+        deleteButtonElement.addEventListener('click', () =>
+          this.deleteSubject(subjectId, state)
+        );
 
         this.taskViewModel.render(subjectId);
       });
