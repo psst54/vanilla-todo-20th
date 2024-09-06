@@ -78,9 +78,15 @@ class TaskViewModel {
       taskElement.classList.toggle('isCompleted');
     }
 
-    taskElement.append(checkboxElement, titleElement, deleteButtonElement);
+    taskElement.append(
+      checkboxElement,
+
+      titleElement,
+      deleteButtonElement
+    );
     this.#addTaskEventHandler({
       task,
+      taskElement,
       deleteButtonElement,
       checkboxElement,
     });
@@ -88,7 +94,12 @@ class TaskViewModel {
     return taskElement;
   }
 
-  #addTaskEventHandler({ task, deleteButtonElement, checkboxElement }) {
+  #addTaskEventHandler({
+    task,
+    taskElement,
+    deleteButtonElement,
+    checkboxElement,
+  }) {
     deleteButtonElement.addEventListener('click', () => {
       this.deleteTask(task.getId(), task.getSubjectId());
       dispatchTaskChangeEvent(deleteButtonElement);
