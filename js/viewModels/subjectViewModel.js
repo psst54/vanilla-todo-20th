@@ -58,7 +58,7 @@ class SubjectViewModel {
       formElement.append(inputElement, addSubjectButtonElement);
       formElement.addEventListener('submit', (event) => {
         event.preventDefault();
-        this.addSubject(inputElement.value, state);
+        this.addSubject({ title: inputElement.value, state });
 
         const taskChangeEvent = new CustomEvent('taskChange', {
           bubbles: true,
