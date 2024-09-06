@@ -1,0 +1,22 @@
+* {
+  color: var(--text-color);
+}
+
+body {
+  background-color: var(--background);
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+input[type='text'] {
+  flex: 1;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid var(--border);
+  outline: none;
+}

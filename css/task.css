@@ -27,22 +27,3 @@
 .task p {
   flex: 1;
 }
-
-.add-task-form {
-  display: flex;
-  gap: 0.5rem;
-
-  width: 100%;
-}
-
-.add-task-form > input {
-  flex: 1;
-
-  background: transparent;
-
-  border: none;
-  border-bottom: 1px solid var(--border);
-  outline: none;
-
-  color: var(--text-color);
-}

@@ -39,6 +39,34 @@ class SubjectViewModel {
       );
       subjectListElement.innerHTML = '';
 
+      // [todo] refactor
+      /* ----- add subject button ----- */
+      const addSubjectCardElement = createElement('li', {
+        class: 'subject add-subject-card',
+      });
+      const formElement = createElement('form');
+      const inputElement = createElement('input', {
+        type: 'text',
+        placeholder: '새로운 목표를 입력해주세요',
+      });
+      const addSubjectButtonElement = createElement('button', {
+        class: 'add-subject-button',
+        id: `add-subject-button-${state}`,
+      });
+      const iconElement = createElement('img', {
+        src: 'assets/addIcon.svg',
+      });
+      addSubjectButtonElement.appendChild(iconElement);
+      formElement.append(inputElement, addSubjectButtonElement);
+      formElement.addEventListener('submit', (event) => {
+        event.preventDefault();
+        this.addSubject(inputElement.value, state);
+      });
+
+      addSubjectCardElement.appendChild(formElement);
+      subjectListElement.appendChild(addSubjectCardElement);
+
+      /* ----- subject list ----- */
       this.#getSubjectsByState(state).forEach((subject) => {
         const subjectId = subject.getId();
         if (subject.getState() !== state) {
