@@ -74,7 +74,6 @@ class SubjectViewModel {
       name: 'subject-title',
     });
     const addSubjectButtonElement = createElement('button', {
-      class: 'add-subject-button',
       id: `add-subject-button-${state}`,
     });
     const iconElement = createElement('img', {
@@ -112,10 +111,10 @@ class SubjectViewModel {
     const subjectElement = createElement('li', {
       class: 'subject',
       innerHTML: `
-        <header class="subject-header">
+        <header>
           <h3>${subject.getTitle()}</h3>
           <button class="delete-subject-button" id="${subjectId}-delete-button">
-            <img src="assets/deleteIcon.svg" class="delete-subject-icon" />
+            <img src="assets/deleteIcon.svg" />
           </button>
         </header>
         <main>

@@ -6,6 +6,13 @@ body {
   background-color: var(--background);
 }
 
+h1 {
+  font-size: 4rem;
+
+  color: transparent;
+  -webkit-text-stroke: 1px var(--text-color);
+}
+
 form {
   display: flex;
   gap: 0.5rem;

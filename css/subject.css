@@ -13,38 +13,21 @@
   border-radius: 1rem;
 }
 
-.subject-header {
+.subject header {
   display: flex;
   justify-content: space-between;
 }
 
-.add-subject-card {
-  display: flex;
-}
-
-.add-subject-button {
-  background: transparent;
-
-  border: none;
-  border-radius: 100%;
-  outline: none;
-
-  cursor: pointer;
-}
-.add-subject-button > img {
-  width: 2rem;
-  height: 2rem;
-}
-
+.add-subject-card button,
 .delete-subject-button {
   background: transparent;
-
   border: none;
   outline: none;
-
   cursor: pointer;
 }
-.delete-subject-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+
+.add-subject-card button img,
+.delete-subject-button img {
+  width: 2rem;
+  height: 2rem;
 }
