@@ -1,32 +1,35 @@
 class SubjectViewModel {
+  #subjectList;
+  #taskViewModel;
+
   constructor(taskViewModel) {
-    this.subjectList = new Map();
-    this.taskViewModel = taskViewModel;
+    this.#subjectList = new Map();
+    this.#taskViewModel = taskViewModel;
   }
 
   addSubject(title, state = OPEN) {
     const subject = new Subject(title, state);
-    if (!this.subjectList.has(state)) {
-      this.subjectList.set(state, []);
+    if (!this.#subjectList.has(state)) {
+      this.#subjectList.set(state, []);
     }
-    this.subjectList.get(state).push(subject);
+    this.#subjectList.get(state).push(subject);
 
     this.render();
     return subject;
   }
 
-  deleteSubject(subjectId, state) {
-    const subjects = this.subjectList.get(state);
-    const subjectIndex = subjects.findIndex(
-      (subject) => subject.getId() === subjectId
+  deleteSubject(targetId, state) {
+    const subjectList = this.#subjectList.get(state);
+    const targetIndex = subjectList.findIndex(
+      (subject) => subject.getId() === targetId
     );
-    subjects.splice(subjectIndex, 1);
+    subjectList.splice(targetIndex, 1);
 
     this.render();
   }
 
-  getSubjectsByState(state) {
-    return this.subjectList.get(state) || [];
+  #getSubjectsByState(state) {
+    return this.#subjectList.get(state) || [];
   }
 
   render() {
@@ -36,7 +39,7 @@ class SubjectViewModel {
       );
       subjectListElement.innerHTML = '';
 
-      this.getSubjectsByState(state).forEach((subject) => {
+      this.#getSubjectsByState(state).forEach((subject) => {
         const subjectId = subject.getId();
         if (subject.getState() !== state) {
           return;
@@ -64,7 +67,7 @@ class SubjectViewModel {
           this.deleteSubject(subjectId, state)
         );
 
-        this.taskViewModel.render(subjectId);
+        this.#taskViewModel.render(subjectId);
       });
     });
   }

@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const taskViewModel = new TaskViewModel();
   const subjectViewModel = new SubjectViewModel(taskViewModel);
 
+  // [todo] remove below
+  // -------------------------------------------------
+
   const openSubject1 = subjectViewModel.addSubject('Opened Subject 1', OPEN);
   taskViewModel.addTask('task 1', openSubject1.getId());
   taskViewModel.addTask('task 2', openSubject1.getId());
@@ -13,13 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
   taskViewModel.addTask('task 1', doneSubject1.getId());
   taskViewModel.addTask('task 2', doneSubject1.getId());
 
+  // --------------------------------------------------
+
   STATE_LIST.forEach((state) => {
     const addSubjectButtonElement = document.getElementById(
       `add-subject-button-${state.toLowerCase()}`
     );
 
     addSubjectButtonElement.addEventListener('click', () => {
-      const subjectName = 'New Subject';
+      const subjectName = NEW_SUBJECT_NAME; // [todo] remove this line
       subjectViewModel.addSubject(subjectName, state);
     });
   });
