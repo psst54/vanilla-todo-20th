@@ -32,3 +32,10 @@ function getRandomId() {
     .toString(36) // Convert to base-36 string.
     .substring(2); // Remove leading '0.'.
 }
+
+function dispatchTaskChangeEvent(element) {
+  const taskChangeEvent = new CustomEvent('taskChange', {
+    bubbles: true,
+  });
+  element.dispatchEvent(taskChangeEvent);
+}

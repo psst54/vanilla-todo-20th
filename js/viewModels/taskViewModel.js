@@ -49,10 +49,7 @@ class TaskViewModel {
 
       this.addTask({ title: inputElement.value, subjectId });
 
-      const taskChangeEvent = new CustomEvent('taskChange', {
-        bubbles: true,
-      });
-      formElement.dispatchEvent(taskChangeEvent);
+      dispatchTaskChangeEvent(formElement);
     });
 
     return formElement;
@@ -108,11 +105,7 @@ class TaskViewModel {
 
       deleteButtonElement.addEventListener('click', () => {
         this.deleteTask(task.getId(), subjectId);
-
-        const taskChangeEvent = new CustomEvent('taskChange', {
-          bubbles: true,
-        });
-        deleteButtonElement.dispatchEvent(taskChangeEvent);
+        dispatchTaskChangeEvent(deleteButtonElement);
       });
 
       checkboxElement.addEventListener('change', (event) => {
@@ -120,10 +113,7 @@ class TaskViewModel {
         task.setIsCompleted(isChecked);
         taskElement.classList.toggle('isCompleted');
 
-        const taskChangeEvent = new CustomEvent('taskChange', {
-          bubbles: true,
-        });
-        checkboxElement.dispatchEvent(taskChangeEvent);
+        dispatchTaskChangeEvent(checkboxElement);
       });
     });
   }

@@ -93,11 +93,7 @@ class SubjectViewModel {
   #handleAddSubjectSubmit(event, inputElement, state, formElement) {
     event.preventDefault();
     this.addSubject({ title: inputElement.value, state });
-
-    const taskChangeEvent = new CustomEvent('taskChange', {
-      bubbles: true,
-    });
-    formElement.dispatchEvent(taskChangeEvent);
+    dispatchTaskChangeEvent(formElement);
   }
 
   /**
@@ -137,11 +133,6 @@ class SubjectViewModel {
     deleteButtonElement.addEventListener('click', () =>
       this.deleteSubject({ targetId: subjectId, state })
     );
-
-    const taskChangeEvent = new CustomEvent('taskChange', {
-      bubbles: true,
-    });
-    deleteButtonElement.dispatchEvent(taskChangeEvent);
   }
 
   #handleTaskChange(subjectId, state) {
@@ -191,6 +182,7 @@ class SubjectViewModel {
           subject.getId(),
           state
         );
+        dispatchTaskChangeEvent(subjectElement);
       });
     });
   }
