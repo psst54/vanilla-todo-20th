@@ -2,14 +2,16 @@ class Task {
   #title;
   #id;
   #isCompleted;
+  #subjectId;
 
-  constructor({ title = NEW_TASK_NAME, isCompleted = false }) {
+  constructor({ title = NEW_TASK_NAME, isCompleted = false, subjectId }) {
     this.#title = title;
     this.#id = getRandomId();
     this.#isCompleted = isCompleted;
+    this.#subjectId = subjectId;
   }
 
-  setCompleted(isCompleted) {
+  setIsCompleted(isCompleted) {
     this.#isCompleted = isCompleted;
   }
 
@@ -23,5 +25,9 @@ class Task {
 
   getIsCompleted() {
     return this.#isCompleted;
+  }
+
+  getSubjectId() {
+    return this.#subjectId;
   }
 }

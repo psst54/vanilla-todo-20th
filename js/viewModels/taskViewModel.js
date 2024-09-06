@@ -6,18 +6,22 @@ class TaskViewModel {
   }
 
   addTask({ title, subjectId, isCompleted = false }) {
-    const task = new Task({ title, isCompleted });
     if (!this.#taskList.has(subjectId)) {
       this.#taskList.set(subjectId, []);
     }
-    this.#taskList.get(subjectId).push(task);
+    this.#taskList
+      .get(subjectId)
+      .push(new Task({ title, isCompleted, subjectId }));
   }
 
   deleteTask(targetId, subjectId) {
+    // Get the task list from which the task will be removed
     const taskList = this.#taskList.get(subjectId);
-    const targetIndex = taskList.findIndex(
-      (subject) => subject.getId() === targetId
-    );
+
+    // Get the index of the target task by its ID
+    const targetIndex = taskList.findIndex((task) => task.getId() === targetId);
+
+    // Remove the target task from the list
     taskList.splice(targetIndex, 1);
   }
 
@@ -25,7 +29,7 @@ class TaskViewModel {
     return this.#taskList.get(subjectId) || [];
   }
 
-  #createTaskInputElement(subjectId) {
+  #createFormElement(subjectId) {
     const formElement = createElement('form', {
       id: `${subjectId}-add-task-form`,
     });
@@ -49,30 +53,70 @@ class TaskViewModel {
 
       this.addTask({ title: inputElement.value, subjectId });
 
-      const taskChangeEvent = new CustomEvent('taskChange', {
-        bubbles: true,
-      });
-      formElement.dispatchEvent(taskChangeEvent);
+      dispatchTaskChangeEvent(formElement);
     });
 
     return formElement;
   }
 
+  #createTaskElement(task) {
+    const taskElement = createElement('li', {
+      class: 'task',
+    });
+    const checkboxElement = createElement('input', {
+      type: 'checkbox',
+      checked: task.getIsCompleted(),
+      name: 'checkbox',
+    });
+    const titleElement = createElement('p', {
+      innerText: task.getTitle(),
+    });
+    const deleteButtonElement = createElement('button', {
+      innerText: '삭제',
+    });
+    if (task.getIsCompleted()) {
+      taskElement.classList.toggle('isCompleted');
+    }
+
+    taskElement.append(checkboxElement, titleElement, deleteButtonElement);
+    this.#addTaskEventHandler({
+      task,
+      deleteButtonElement,
+      checkboxElement,
+    });
+
+    return taskElement;
+  }
+
+  #addTaskEventHandler({ task, deleteButtonElement, checkboxElement }) {
+    deleteButtonElement.addEventListener('click', () => {
+      this.deleteTask(task.getId(), task.getSubjectId());
+      dispatchTaskChangeEvent(deleteButtonElement);
+    });
+
+    checkboxElement.addEventListener('change', (event) => {
+      task.setIsCompleted(event.target.checked);
+      taskElement.classList.toggle('isCompleted');
+
+      dispatchTaskChangeEvent(checkboxElement);
+    });
+  }
+
   getSubjectState(subjectId) {
-    const taskList = this.#taskList.get(subjectId);
-    if (!taskList) {
+    const currentTaskList = this.#taskList.get(subjectId);
+    if (!currentTaskList) {
       return OPEN;
     }
 
-    const taskCount = taskList.length;
-    const doneTaskCount = taskList.filter((task) =>
+    const totalTaskCount = currentTaskList.length;
+    const doneTaskCount = currentTaskList.filter((task) =>
       task.getIsCompleted()
     ).length;
 
     if (doneTaskCount === 0) {
       return OPEN;
     }
-    if (taskCount === doneTaskCount) {
+    if (totalTaskCount === doneTaskCount) {
       return DONE;
     }
     return IN_PROGRESS;
@@ -82,49 +126,12 @@ class TaskViewModel {
     const taskListElement = document.getElementById(`${subjectId}-task-list`);
     taskListElement.innerHTML = '';
 
-    taskListElement.appendChild(this.#createTaskInputElement(subjectId));
+    // Render form to add task
+    taskListElement.appendChild(this.#createFormElement(subjectId));
 
+    // Render task
     this.#getTasksBySubject(subjectId).forEach((task) => {
-      const taskElement = createElement('li', {
-        class: 'task',
-      });
-      const checkboxElement = createElement('input', {
-        type: 'checkbox',
-        checked: task.getIsCompleted(),
-        name: 'checkbox',
-      });
-      const titleElement = createElement('p', {
-        innerText: task.getTitle(),
-      });
-      const deleteButtonElement = createElement('button', {
-        innerText: '삭제',
-      });
-      if (task.getIsCompleted()) {
-        taskElement.classList.toggle('isCompleted');
-      }
-
-      taskElement.append(checkboxElement, titleElement, deleteButtonElement);
-      taskListElement.appendChild(taskElement);
-
-      deleteButtonElement.addEventListener('click', () => {
-        this.deleteTask(task.getId(), subjectId);
-
-        const taskChangeEvent = new CustomEvent('taskChange', {
-          bubbles: true,
-        });
-        deleteButtonElement.dispatchEvent(taskChangeEvent);
-      });
-
-      checkboxElement.addEventListener('change', (event) => {
-        const isChecked = event.target.checked;
-        task.setCompleted(isChecked);
-        taskElement.classList.toggle('isCompleted');
-
-        const taskChangeEvent = new CustomEvent('taskChange', {
-          bubbles: true,
-        });
-        checkboxElement.dispatchEvent(taskChangeEvent);
-      });
+      taskListElement.appendChild(this.#createTaskElement(task));
     });
   }
 }
