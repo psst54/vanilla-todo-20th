@@ -1,5 +1,43 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .task {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.add-task-form {
+  display: flex;
+  gap: 0.5rem;
+
+  width: 100%;
+}
+
+.add-task-form > input {
+  flex: 1;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid var(--border);
+  outline: none;
+
+  color: var(--text-color);
+}
+.add-task-form > button {
+  padding: 0.25rem 0.5rem;
+  background: transparent;
+
+  border: 1px solid var(--button-border);
+  border-radius: 1rem;
+  outline: none;
+
+  color: var(--text-color);
+  white-space: nowrap;
+
+  cursor: pointer;
 }
