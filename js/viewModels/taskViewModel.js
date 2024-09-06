@@ -19,10 +19,31 @@ class TaskViewModel {
     return this.#taskList.get(subjectId) || [];
   }
 
+  #createTaskInputElement(subjectId) {
+    const formId = `${subjectId}-add-task-form`;
+    const formElement = document.createElement('form');
+    formElement.id = formId;
+    formElement.classList.add('add-task-form');
+
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.placeholder = '할 일을 입력해주세요';
+
+    const submitButtonElement = document.createElement('button');
+    submitButtonElement.innerText = '추가';
+
+    formElement.appendChild(inputElement);
+    formElement.appendChild(submitButtonElement);
+
+    return formElement;
+  }
+
   render(subjectId) {
     const taskListElementId = `${subjectId}-task-list`;
     const taskListElement = document.getElementById(taskListElementId);
     taskListElement.innerHTML = '';
+
+    taskListElement.appendChild(this.#createTaskInputElement(subjectId));
 
     this.#getTasksBySubject(subjectId).forEach((task) => {
       const taskElement = document.createElement('li');
