@@ -27,3 +27,8 @@
 .task p {
   flex: 1;
 }
+
+.isCompleted > p {
+  color: var(--cancel-text-color);
+  text-decoration: line-through;
+}

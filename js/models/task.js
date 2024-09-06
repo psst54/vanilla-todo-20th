@@ -22,4 +22,8 @@ class Task {
   getId() {
     return this.#id;
   }
+
+  getIsCompleted() {
+    return this.#isCompleted;
+  }
 }

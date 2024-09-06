@@ -67,6 +67,7 @@ class TaskViewModel {
       });
       const checkboxElement = createElement('input', {
         type: 'checkbox',
+        checked: task.getIsCompleted(),
       });
       const titleElement = createElement('p', {
         innerText: task.getTitle(),
@@ -74,6 +75,9 @@ class TaskViewModel {
       const deleteButtonElement = createElement('button', {
         innerText: '삭제',
       });
+      if (task.getIsCompleted()) {
+        taskElement.classList.toggle('isCompleted');
+      }
 
       taskElement.append(checkboxElement, titleElement, deleteButtonElement);
       taskListElement.appendChild(taskElement);
@@ -85,6 +89,7 @@ class TaskViewModel {
       checkboxElement.addEventListener('change', (event) => {
         const isChecked = event.target.checked;
         task.setCompleted(isChecked);
+        taskElement.classList.toggle('isCompleted');
       });
     });
   }
