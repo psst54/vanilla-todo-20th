@@ -4,16 +4,13 @@ class SubjectViewModel {
 
   constructor(taskViewModel) {
     this.#subjectList = new Map();
+    STATE_LIST.forEach((state) => this.#subjectList.set(state, []));
     this.#taskViewModel = taskViewModel;
   }
 
   addSubject(title, state = OPEN) {
     const subject = new Subject(title, state);
-    if (!this.#subjectList.has(state)) {
-      this.#subjectList.set(state, []);
-    }
     this.#subjectList.get(state).push(subject);
-
     this.render();
     return subject;
   }
@@ -48,6 +45,7 @@ class SubjectViewModel {
       const inputElement = createElement('input', {
         type: 'text',
         placeholder: '새로운 목표를 입력해주세요',
+        name: 'subject-title',
       });
       const addSubjectButtonElement = createElement('button', {
         class: 'add-subject-button',
@@ -61,6 +59,11 @@ class SubjectViewModel {
       formElement.addEventListener('submit', (event) => {
         event.preventDefault();
         this.addSubject(inputElement.value, state);
+
+        const taskChangeEvent = new CustomEvent('taskChange', {
+          bubbles: true,
+        });
+        formElement.dispatchEvent(taskChangeEvent);
       });
 
       addSubjectCardElement.appendChild(formElement);
@@ -89,6 +92,27 @@ class SubjectViewModel {
         });
         subjectListElement.appendChild(subjectElement);
 
+        subjectElement.addEventListener('taskChange', () => {
+          const newState = this.#taskViewModel.getSubjectState(subjectId);
+          const subjectList = this.#subjectList.get(state);
+          const targetSubject = subjectList.find(
+            (subject) => subject.getId() === subjectId
+          );
+          targetSubject.setState(newState);
+
+          const index = subjectList.indexOf(targetSubject);
+
+          if (state === newState) {
+            this.#taskViewModel.render(subjectId);
+            return;
+          }
+
+          subjectList.splice(index, 1);
+          this.#subjectList.get(newState).push(targetSubject);
+
+          this.render();
+        });
+
         const deleteButtonElement = document.getElementById(
           `${subjectId}-delete-button`
         );
@@ -96,7 +120,10 @@ class SubjectViewModel {
           this.deleteSubject(subjectId, state)
         );
 
-        this.#taskViewModel.render(subjectId);
+        const taskChangeEvent = new CustomEvent('taskChange', {
+          bubbles: true,
+        });
+        deleteButtonElement.dispatchEvent(taskChangeEvent);
       });
     });
   }

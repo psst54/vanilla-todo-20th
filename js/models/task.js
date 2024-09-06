@@ -4,11 +4,11 @@ class Task {
   #id;
   #isCompleted;
 
-  constructor(title, subjectId) {
+  constructor(title, subjectId, isCompleted = false) {
     this.#title = title;
     this.#subjectId = subjectId;
     this.#id = Math.random().toString(36).substring(2);
-    this.#isCompleted = false;
+    this.#isCompleted = isCompleted;
   }
 
   setCompleted(isCompleted) {

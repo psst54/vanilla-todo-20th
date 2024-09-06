@@ -11,8 +11,8 @@ class Subject {
     this.#id = Math.random().toString(36).substring(2); // [todo] make random id function
   }
 
-  addTask(task) {
-    this.#taskList.push(task);
+  setState(state) {
+    this.#state = state;
   }
 
   getTitle() {
