@@ -28,7 +28,7 @@ class SubjectViewModel {
     this.render();
   }
 
-  getSubjectsByState(state) {
+  #getSubjectsByState(state) {
     return this.#subjectList.get(state) || [];
   }
 
@@ -39,7 +39,7 @@ class SubjectViewModel {
       );
       subjectListElement.innerHTML = '';
 
-      this.getSubjectsByState(state).forEach((subject) => {
+      this.#getSubjectsByState(state).forEach((subject) => {
         const subjectId = subject.getId();
         if (subject.getState() !== state) {
           return;

@@ -15,7 +15,7 @@ class TaskViewModel {
     this.render(subjectId);
   }
 
-  getTasksBySubject(subjectId) {
+  #getTasksBySubject(subjectId) {
     return this.#taskList.get(subjectId) || [];
   }
 
@@ -24,7 +24,7 @@ class TaskViewModel {
     const taskListElement = document.getElementById(taskListElementId);
     taskListElement.innerHTML = '';
 
-    this.getTasksBySubject(subjectId).forEach((task) => {
+    this.#getTasksBySubject(subjectId).forEach((task) => {
       const taskElement = document.createElement('li');
       taskElement.className = 'task';
       const checkboxElement = document.createElement('input');
