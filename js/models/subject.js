@@ -6,7 +6,7 @@ class Subject {
   constructor({ title = NEW_SUBJECT_NAME, state = OPEN }) {
     this.#title = title;
     this.#state = state;
-    this.#id = Math.random().toString(36).substring(2); // [todo] make random id function
+    this.#id = getRandomId();
   }
 
   setState(state) {

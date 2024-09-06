@@ -5,7 +5,7 @@ class Task {
 
   constructor({ title = NEW_TASK_NAME, isCompleted = false }) {
     this.#title = title;
-    this.#id = Math.random().toString(36).substring(2);
+    this.#id = getRandomId();
     this.#isCompleted = isCompleted;
   }
 

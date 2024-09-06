@@ -10,3 +10,9 @@ function createElement(tag, attributes = {}) {
 
   return element;
 }
+
+function getRandomId() {
+  return Math.random() // generate random number between 0 to 1
+    .toString(36) // convert to base-36 string
+    .substring(2); // remove leading '0.'
+}
