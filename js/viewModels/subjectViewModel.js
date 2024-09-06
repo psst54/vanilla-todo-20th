@@ -4,39 +4,65 @@ class SubjectViewModel {
 
   constructor(taskViewModel) {
     this.#subjectList = new Map();
-    STATE_LIST.forEach((state) => this.#subjectList.set(state, [])); // init all columns
+    STATE_LIST.forEach((state) => this.#subjectList.set(state, [])); // Init all columns
     this.#taskViewModel = taskViewModel;
   }
 
+  /**
+   * Adds a new subject to the specified state column and updates the view.
+   *
+   * @param {string} params.title - The title of the new subject.
+   * @param {string} [params.state=OPEN] - The state column where the subject will be added. Default value is `OPEN`.
+   *
+   * @returns {Subject} The newly created subject.
+   */
   addSubject({ title, state = OPEN }) {
     const newSubject = new Subject({ title, state });
 
     this.#subjectList
-      .get(state) // get the column where the subject will be inserted
+      .get(state) // Get the column where the subject will be inserted
       .push(newSubject);
 
     this.render();
     return newSubject;
   }
 
-  deleteSubject(targetId, state) {
-    // get the column from which the subject will be removed
+  /**
+   * Removes a subject from the specified state column and updates the view.
+   *
+   * @param {string} params.targetId - The ID of the subject to be removed.
+   * @param {string} params.state - The state column from which the subject will be removed.
+   */
+  deleteSubject({ targetId, state }) {
+    // Get the column from which the subject will be removed
     const subjectList = this.#subjectList.get(state);
 
-    // get the index of the target subject by its ID
+    // Get the index of the target subject by its ID
     const targetIndex = subjectList.findIndex(
       (subject) => subject.getId() === targetId
     );
-    // remove the target subject from the column
+    // Remove the target subject from the column
     subjectList.splice(targetIndex, 1);
 
     this.render();
   }
 
+  /**
+   * Retrieves the list of subjects for a given state.
+   *
+   * @param {string} state - The state for which to retrieve subjects.
+   * @returns {Subject[]} - An array of subjects associated with the specified state.
+   */
   #getSubjectsByState(state) {
     return this.#subjectList.get(state) || [];
   }
 
+  /**
+   * Creates and returns a form element for adding a new subject.
+   *
+   * @param {string} state - The state in which the new subject will be added.
+   * @returns {HTMLElement} - The created form element.
+   */
   #createAddSubjectForm(state) {
     const addSubjectCardElement = createElement('li', {
       class: 'subject add-subject-card',
@@ -75,6 +101,12 @@ class SubjectViewModel {
     formElement.dispatchEvent(taskChangeEvent);
   }
 
+  /**
+   * Creates a card element for a subject.
+   *
+   * @param {Subject} subject - The subject object used to create the DOM element.
+   * @returns {HTMLLIElement} The created element of a subject.
+   */
   #createSubjectElement(subject) {
     const subjectId = subject.getId();
     const subjectElement = createElement('li', {
@@ -104,7 +136,7 @@ class SubjectViewModel {
       `${subjectId}-delete-button`
     );
     deleteButtonElement.addEventListener('click', () =>
-      this.deleteSubject(subjectId, state)
+      this.deleteSubject({ targetId: subjectId, state })
     );
 
     const taskChangeEvent = new CustomEvent('taskChange', {
@@ -115,22 +147,27 @@ class SubjectViewModel {
 
   #handleTaskChange(subjectId, state) {
     const newState = this.#taskViewModel.getSubjectState(subjectId);
-    const subjectList = this.#subjectList.get(state);
-    const targetSubject = subjectList.find(
-      (subject) => subject.getId() === subjectId
+    const currentColumnSubjectList = this.#subjectList.get(state);
+    const subjectToUpdate = currentColumnSubjectList.find(
+      (currentSubject) => currentSubject.getId() === subjectId
     );
-    targetSubject.setState(newState);
+    subjectToUpdate.setState(newState);
 
     if (state === newState) {
-      // 1. only render task list of subject
+      // Case #1
+      // If the state is not changed, only update the task list for the subject
       this.#taskViewModel.render(subjectId);
       return;
     }
 
-    subjectList.splice(subjectList.indexOf(targetSubject), 1);
-    this.#subjectList.get(newState).push(targetSubject);
+    currentColumnSubjectList.splice(
+      currentColumnSubjectList.indexOf(subjectToUpdate),
+      1
+    );
+    this.#subjectList.get(newState).push(subjectToUpdate);
 
-    // 2. render all the column
+    // Case #2
+    // Re-render the entire column
     this.render();
   }
 
@@ -140,13 +177,13 @@ class SubjectViewModel {
         `${state}-subject-list`
       );
 
-      // init column
+      // Init column
       subjectListElement.innerHTML = '';
 
-      // render form to add subject
+      // Render form to add subject
       subjectListElement.appendChild(this.#createAddSubjectForm(state));
 
-      // render subject
+      // Render subject
       this.#getSubjectsByState(state).forEach((subject) => {
         const subjectElement = this.#createSubjectElement(subject);
         subjectListElement.appendChild(subjectElement);
