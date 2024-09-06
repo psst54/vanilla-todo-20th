@@ -15,6 +15,16 @@ class SubjectViewModel {
     return subject;
   }
 
+  deleteSubject(subjectId, state) {
+    const subjects = this.subjectList.get(state);
+    const subjectIndex = subjects.findIndex(
+      (subject) => subject.getId() === subjectId
+    );
+    subjects.splice(subjectIndex, 1);
+
+    this.render();
+  }
+
   getSubjectsByColumn(columnId) {
     return this.subjectList.get(columnId) || [];
   }
@@ -37,7 +47,7 @@ class SubjectViewModel {
         subjectElement.innerHTML = `
             <header class="subject-header">
               <h3>${subject.getTitle()}</h3>
-              <button class="delete-subject-button">
+              <button class="delete-subject-button" id="${subjectId}-delete-button">
                 <img src="assets/deleteIcon.svg" class="delete-subject-icon" />
               </button>
             </header>
@@ -46,6 +56,13 @@ class SubjectViewModel {
             </main>
             `;
         subjectListElement.appendChild(subjectElement);
+
+        const deleteButtonElement = document.getElementById(
+          `${subjectId}-delete-button`
+        );
+        deleteButtonElement.addEventListener('click', () =>
+          this.deleteSubject(subjectId, column)
+        );
 
         this.taskViewModel.render(subjectId);
       });
