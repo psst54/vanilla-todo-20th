@@ -31,7 +31,7 @@ class TaskViewModel {
     });
     const inputElement = createElement('input', {
       type: 'text',
-      placeholder: '할 일을 입력해주세요',
+      placeholder: NEW_TASK_PLACEHOLDER,
       name: 'task-title',
     });
     const buttonElement = createElement('button', {

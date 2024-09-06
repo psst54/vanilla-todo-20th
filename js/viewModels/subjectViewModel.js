@@ -44,7 +44,7 @@ class SubjectViewModel {
       const formElement = createElement('form');
       const inputElement = createElement('input', {
         type: 'text',
-        placeholder: '새로운 목표를 입력해주세요',
+        placeholder: NEW_SUBJECT_PLACEHOLDER,
         name: 'subject-title',
       });
       const addSubjectButtonElement = createElement('button', {
