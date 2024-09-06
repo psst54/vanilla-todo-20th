@@ -4,7 +4,7 @@ class Subject {
   #state;
   #id;
 
-  constructor(title = 'New Subject', state = OPEN) {
+  constructor(title = NEW_SUBJECT_NAME, state = OPEN) {
     this.#title = title;
     this.#taskList = [];
     this.#state = state;

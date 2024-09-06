@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
 
     addSubjectButtonElement.addEventListener('click', () => {
-      const subjectName = 'New Subject';
+      const subjectName = NEW_SUBJECT_NAME; // [todo] remove this line
       subjectViewModel.addSubject(subjectName, state);
     });
   });
