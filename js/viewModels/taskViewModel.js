@@ -35,6 +35,14 @@ class TaskViewModel {
     formElement.appendChild(inputElement);
     formElement.appendChild(submitButtonElement);
 
+    formElement.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!inputElement.value) {
+        return;
+      }
+      this.addTask(inputElement.value, subjectId);
+    });
+
     return formElement;
   }
 
