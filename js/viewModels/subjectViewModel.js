@@ -182,7 +182,9 @@ class SubjectViewModel {
       subjectListElement.innerHTML = '';
 
       // Render form to add subject
-      subjectListElement.appendChild(this.#createFormElement(state));
+      if (state === OPEN) {
+        subjectListElement.appendChild(this.#createFormElement(state));
+      }
 
       // Render subject
       this.#getSubjectsByState(state).forEach((subject) => {
